@@ -6,15 +6,15 @@
 
 This project examines the lifespan and behavior of *C. elegans* under two drug treatments and explores their behavior under optogenetic conditions. The primary objectives are to utilize data from the Laboratory of the Physics of Biological Systems (LPBS) to:
 
-1. Classify worms based on drug treatments (**CompanyDrug** and **Terbinafine**).
+1. Classify worms based on drug treatments (**Drug1** and **Drug2**).
 2. Predict lifespan-related outcomes.
 3. Analyze behavioral responses to light stimuli under optogenetic conditions (**ATR+** and **ATR-**).
 
-For drug classification, a **linear SVM** model performed best, achieving:
+For drug classification, a **linear SVM** model performed best considering all 3 classifications, achieving:
 - Multi-class classification mean accuracy: **0.544557**
 - Binary classification mean accuracies:
-  - **CompanyDrug**: **0.741053**
-  - **Terbinafine**: **0.419421**
+  - **Drug1**: **0.741053**
+  - **Drug2**: **0.419421**
 
 Models for lifespan estimation demonstrated that **[insert results here]**.
 
@@ -60,19 +60,19 @@ python run.py --type <flag>
 ```
 
 ### Flags
-- `classification-companydrug`: Runs the model for binary classification of the company drug dataset.
-- `classification-terbinafin`: Runs the model for binary classification of the terbinafin drug dataset.
+- `classification-drug1`: Runs the model for binary classification of the Drug1 dataset.
+- `classification-drug2`: Runs the model for binary classification of the Drug2 dataset.
 - `classification-multiclass`: Runs the model for multiclass classification using the combined dataset.
 
 ### Example Usage
-To run the model for company drug classification:
+To run the model for Drug1 classification:
 ```bash
-python run.py --type classification-companydrug
+python run.py --type classification-drug1
 ```
 
-To run the model for terbinafin drug classification:
+To run the model for Drug2 classification:
 ```bash
-python run.py --type classification-terbinafin
+python run.py --type classification-drug2
 ```
 
 To run the model for multiclass classification:
@@ -85,8 +85,8 @@ python run.py --type classification-multiclass
 - If a pre-trained model exists in the `models/` directory, it will be loaded. If not, a new model will be trained and saved in the `models/` directory.
 
 The respective datasets are loaded from the `lifespan_merged_datasets/` folder, and the model files are stored in the `models/` folder as:
-- `best_model_companyDrug.pkl`
-- `best_model_terbinafin.pkl`
+- `best_model_Drug1.pkl`
+- `best_model_Drug2.pkl`
 - `best_model_multiclass.pkl`.
 
 ## File Structure 
@@ -100,8 +100,8 @@ ml-project-2-lpbs-ml4science/
 ├── lifespan_merged_datasets/           # Input data files
 │   ├── mergedworms_combined.csv        # All 48 worms merged
 │   ├── mergedworms_combined2.csv       # All 48 worms merged
-│   └── mergedworms_companyDrug.csv     # 24 CompanyDrug and control worms
-│   └── mergedworms_terbinafin.csv      # 24 Terbinafin and control worms
+│   └── mergedworms_Drug1.csv           # 24 Drug1 and control worms
+│   └── mergedworms_Drug2.csv           # 24 Drug2 and control worms
 │
 ├── lifespan_exploration/               # Lifespan-related exploration
 │   ├── classification_functions.py     # Classification functions for training model and plotting
@@ -115,8 +115,8 @@ ml-project-2-lpbs-ml4science/
 │   └── lifespan_make_df.ipynb          # Lifespan dataset - Making the dataframe and checking worm death
 │
 ├── models/                             # Saved models
-│   ├── best_model_companyDrug.pkl      # CompanyDrug binary classification  
-│   ├── best_model_terbinafin.pkl       # Terbinafine binary classification
+│   ├── best_model_Drug1.pkl            # Drug1 binary classification  
+│   ├── best_model_Drug2.pkl            # Drug2 binary classification
 │   ├── best_model_multiclass.pkl       # Multi-class classification
 │   ├── best_model_lifespan.pkl         # Lifespan prediction
 │   └── best_model_opto.pkl             
