@@ -16,8 +16,8 @@ def load_data(task_type):
     
     # Map task type to the correct CSV file
     dataset_files = {
-        "classification-companydrug": "mergedworms_companyDrug.csv",
-        "classification-terbinafin": "mergedworms_terbinafin.csv",
+        "classification-drug1": "mergedworms_Drug1.csv",
+        "classification-drug2": "mergedworms_Drug2.csv",
         "classification-multiclass": "mergedworms_combined.csv"
     }
     
@@ -36,10 +36,10 @@ def load_data(task_type):
     X = df.drop(columns=['id', 'worm_id', 'average_distance_per_frame', 
                          'maximal_distance_traveled', 'average_acceleration', 'drugged'])
     
-    if task_type == "classification-companydrug":
-        y = (df['drugged'] == 1).astype(int)  # Binary classification for companyDrug
-    elif task_type == "classification-terbinafin":
-        y = (df['drugged'] == 2).astype(int)  # Binary classification for terbinafin (drug presence)
+    if task_type == "classification-drug1":
+        y = (df['drugged'] == 1).astype(int)  # Binary classification for Drug1
+    elif task_type == "classification-drug2":
+        y = (df['drugged'] == 2).astype(int)  # Binary classification for Drug2 (drug presence)
     elif task_type == "classification-multiclass":
         y = df['drugged']  # Multi-class classification
     else:
@@ -98,8 +98,8 @@ def test_model(model, X, y):
 def main():
     parser = argparse.ArgumentParser(description="Run ML models for C. elegans project.")
     parser.add_argument('--type', type=str, required=True,
-                        choices=['classification-companydrug', 
-                                 'classification-terbinafin', 
+                        choices=['classification-drug1', 
+                                 'classification-drug2', 
                                  'classification-multiclass'],
                         help="Type of classification to perform.")
     
@@ -108,8 +108,8 @@ def main():
 
     # Define paths
     model_files = {
-        "classification-companydrug": "best_model_companyDrug.pkl",
-        "classification-terbinafin": "best_model_terbinafin.pkl",
+        "classification-drug1": "best_model_Drug1.pkl",
+        "classification-drug2": "best_model_Drug2.pkl",
         "classification-multiclass": "best_model_multiclass.pkl"
     }
     model_path = os.path.join("models", model_files[task_type])
