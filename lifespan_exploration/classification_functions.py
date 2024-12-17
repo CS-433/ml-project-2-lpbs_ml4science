@@ -240,9 +240,9 @@ def plot_best_five_individual(plots_df):
       sns.barplot(x='model', y='mean_accuracy', data=df, yerr=df['std_deviation'], ecolor='black')
       if count == 0:
       # Add labels and title
-          plt.title('Binary Classification (CompanyDrug) Results: Model Accuracy')
+          plt.title('Binary Classification (Drug1) Results: Model Accuracy')
       elif count == 1:
-          plt.title('Binary Classification (Terbinafin) Results: Model Accuracy')
+          plt.title('Binary Classification (Drug2) Results: Model Accuracy')
       else:
           plt.title('Multi-class Classification Results: Model Accuracy')
       plt.xlabel('Model')
