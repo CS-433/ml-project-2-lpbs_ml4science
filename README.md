@@ -94,11 +94,20 @@ The respective datasets are loaded from the `lifespan_merged_datasets/` folder, 
 ```graphql
 ml-project-2-lpbs-ml4science/
 │
+├── images/                             # Images
+│   ├── ... 
+│
 ├── lifespan_merged_datasets/           # Input data files
 │   ├── mergedworms_combined.csv        # All 48 worms merged
 │   ├── mergedworms_combined2.csv       # All 48 worms merged
 │   └── mergedworms_companyDrug.csv     # 24 CompanyDrug and control worms
 │   └── mergedworms_terbinafin.csv      # 24 Terbinafin and control worms
+│
+├── lifespan_exploration/               # Lifespan-related exploration
+│   ├── classification_functions.py     # Classification functions for training model and plotting
+│   ├── drugs_classification.ipynb      # Notebook explaining classification
+│   └── ...                             # Lifespan estimation functions for training model
+│   └── ...                             # Notebook explaining lifespan estimation
 │
 ├── preprocessing/                      # Preprocessing
 │   ├── Analysis_single_worm.ipynb      # Lifespan dataset - Initial analysis for feature engineering         
@@ -114,8 +123,6 @@ ml-project-2-lpbs-ml4science/
 │
 ├── requirements.txt                    # Required libraries
 ├── run.py                              # Main script to run models
-├── exploratory_analysis.ipynb          # Notebook for EDA and preprocessing
-├── model_training.ipynb                # Notebook for model training and evaluation
 └── README.md                           # Project documentation
 ```
 
