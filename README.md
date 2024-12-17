@@ -79,7 +79,7 @@ ml-project-2-lpbs-ml4science/
 │
 ├── models/                             # Saved models
 │   ├── best_model_companyDrug.pkl      # CompanyDrug binary classification  
-│   ├── best_model_terbinafin.pkl       # Terbinafin binary classification
+│   ├── best_model_terbinafin.pkl       # Terbinafine binary classification
 │   ├── best_model_multiclass.pkl       # Multi-class classification
 │   ├── best_model_lifespan.pkl         # Lifespan prediction
 │   └── best_model_opto.pkl             
