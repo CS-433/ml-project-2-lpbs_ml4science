@@ -48,7 +48,7 @@ seaborn | 0.10.0 |
 scikit-learn | 1.0.2 |
 xgboost | 1.6.2 |
 
---
+---
 
 ## Running the Project
 
