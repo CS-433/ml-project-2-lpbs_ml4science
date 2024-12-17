@@ -3,168 +3,98 @@ import numpy as np
 from sklearn.model_selection import GroupKFold
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import accuracy_score, classification_report
+from sklearn.metrics import accuracy_score
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
 from xgboost import XGBClassifier
 from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import LinearRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neural_network import MLPClassifier
 from sklearn.ensemble import StackingClassifier
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-
-def split_by_worm_id(df, test_size=0.2):
-  """Splits a DataFrame based on 'worm_id' into training and testing sets.
-
-  Args:
-    df: The input DataFrame.
-    test_size: The proportion of data to include in the test set.
-
-  Returns:
-    A tuple of two DataFrames: (train_df, test_df)
-  """
-  while True:
-    # Get unique worm IDs
-    unique_worms = df['worm_id'].unique()
-
-    # Randomly select worm IDs for the test set
-    np.random.shuffle(unique_worms)
-    test_worm_ids = unique_worms[:int(len(unique_worms) * test_size)]
-
-    # Create training and testing DataFrames
-    train_df = df[~df['worm_id'].isin(test_worm_ids)]
-    test_df = df[df['worm_id'].isin(test_worm_ids)]
-
-    #drop worm id
-    train_df = train_df.drop('worm_id', axis=1)
-    test_df = test_df.drop('worm_id', axis=1)
-    #drop distance
-    train_df = train_df.drop('average_distance_per_frame', axis=1)
-    test_df = test_df.drop('average_distance_per_frame', axis=1)
-    #drop maximal distance
-    train_df = train_df.drop('maximal_distance_traveled', axis=1)
-    test_df = test_df.drop('maximal_distance_traveled', axis=1)
-    #drop group
-    train_df = train_df.drop('group', axis=1)
-    test_df = test_df.drop('group', axis=1)
-    #drop acceleration
-    train_df = train_df.drop('average_acceleration', axis=1)
-    test_df = test_df.drop('average_acceleration', axis=1)
-
-    # Check if all classes are present in both sets
-    if len(train_df['drugged'].unique()) == 3 and len(test_df['drugged'].unique()) == 3:
-      return train_df, test_df
-
-
-def train_test_x_and_y(train_df, test_df):
-  """Splits a DataFrame based on the column id 'drugged' to return X and y training and testing sets
-
-  Args:
-    train_df: Training DataFrame
-    test_df: Testing DataFram
-
-  Returns:
-    A tuple of four DataFrames: (X_train, y_train, X_test, y_test)
-  """
-
-  X_train = train_df.drop('drugged', axis=1)  # Features
-  y_train = train_df['drugged']  # Target variable
-
-  X_test = test_df.drop('drugged', axis=1)  # Features
-  y_test = test_df['drugged']  # Target variable
-
-  return X_train, y_train, X_test, y_test
-
-  
-def group_kfold_validation(df, model_select="logistic", n_splits=5, random_state=42):
+#code to return the model along with accuracies and stdev for a specific model
+def return_model(df, model_name, n_splits=5, random_state=42):
     """
-    Perform GroupKFold cross-validation on the dataset based on worm_id.
+    Returns a trained model, mean accuracy, and standard deviation after GroupKFold validation.
 
     Args:
         df: DataFrame containing the dataset.
+        model_name: Name of the model ('svm', 'logistic', etc.).
         n_splits: Number of folds for cross-validation.
+        random_state: Random state.
 
     Returns:
-        None (prints mean accuracy and classification report).
+        model: The trained model on the full dataset.
+        mean_accuracy: Mean accuracy from cross-validation.
+        std_accuracy: Standard deviation of accuracy from cross-validation.
     """
     # Extract features (X), target (y), and groups (worm_id)
-    X = df.drop(columns=['id', 'worm_id', 'drugged', 'average_distance_per_frame', 'maximal_distance_traveled', 'average_acceleration'])  # Drop 'worm_id' and target #dropping id removes all prediction strength
-    y = df['drugged']  # Target variable
-    groups = df['worm_id']  # Group variable for GroupKFold
-    
+    X = df.drop(columns=['id', 'worm_id', 'drugged', 'average_distance_per_frame', 
+                         'maximal_distance_traveled', 'average_acceleration'])
+    y = df['drugged']
+    groups = df['worm_id']
+
+    # Select model based on model_name
+    if model_name == "svm":
+        model = SVC(random_state=random_state, class_weight='balanced')
+    elif model_name == "logistic":
+         model = LogisticRegression(random_state=random_state, penalty='l2', max_iter=1000, multi_class='multinomial', solver='saga', class_weight={0:0.5,1:0.25,2:0.25})
+    elif model_name == "random_forest":
+        model = RandomForestClassifier(random_state=random_state)
+    elif model_name == "stacking_classifier":
+        estimators = [('rf', RandomForestClassifier()), ('svm', SVC(probability=True))] #for stacking
+        model = StackingClassifier(estimators=estimators, final_estimator=LogisticRegression())
+    else:
+        raise ValueError("Unsupported model name. Choose from 'svm', 'logistic', or 'random_forest'.")
+
     # Initialize GroupKFold
     gkf = GroupKFold(n_splits=n_splits)
-    
     accuracies = []
+
+    # Cross-validation loop
     for train_idx, test_idx in gkf.split(X, y, groups):
-        # Create train and test sets
         X_train, X_test = X.iloc[train_idx], X.iloc[test_idx]
         y_train, y_test = y.iloc[train_idx], y.iloc[test_idx]
 
-
-        # sample imputing (NEED TO IMPROVE) -- ONLY TEMPORARY
+        # Handle missing values
         if np.isnan(X_train).any().any() or np.isnan(X_test).any().any():
-          # Impute missing values with the median
-          imputer = SimpleImputer(strategy='median')
-          X_train = imputer.fit_transform(X_train)
-          X_test = imputer.fit_transform(X_test)
+            imputer = SimpleImputer(strategy='median')
+            X_train = imputer.fit_transform(X_train)
+            X_test = imputer.transform(X_test)
 
-        # Initialize and train Random Forest Classifier
-        if model_select == "logistic":
-          # model = LogisticRegression(random_state=random_state, penalty='l2', max_iter=1000, multi_class='multinomial', solver='saga', class_weight={0:0.5,1:0.25,2:0.25}) #
-          model = LogisticRegression(random_state=random_state, penalty='l2', max_iter=500, solver='lbfgs') #
-        elif model_select == "random_forest":
-           model = RandomForestClassifier(random_state=random_state)
-        elif model_select == "decision_tree":
-           model = DecisionTreeClassifier(random_state=random_state)
-        elif model_select == "svm":
-           model = SVC(random_state=random_state, class_weight='balanced')
-        # elif model_select == "linear":
-        #    model = LinearRegression()
-        elif model_select == "xgboost":
-          model = XGBClassifier(random_state=random_state, use_label_encoder=False, eval_metric='mlogloss', n_estimators=100, learning_rate=0.05, gamma=0.001) #converges regardless of n_estimators, learning_rate and gamma
-        else:
-           raise Exception("Invalid model selected, options are logistic, random_forest, decision_tree")
+        # Standardize features if needed
+        if model_name in ["logistic", "svm"]:
+            scaler = StandardScaler()
+            X_train = scaler.fit_transform(X_train)
+            X_test = scaler.transform(X_test)
 
-
-        #scale for linear models only
-        if model_select == "logistic" or model_select == "svm":
-            scaler_train = StandardScaler()
-            scaler_train.fit(X_train)
-            X_train = scaler_train.transform(X_train)
-
-            scaler_test = StandardScaler()
-            scaler_test.fit(X_test)
-            X_test = scaler_test.transform(X_test)
-
-
+        # Train and evaluate the model
         model.fit(X_train, y_train)
-
-        # Predict and evaluate
         y_pred = model.predict(X_test)
         acc = accuracy_score(y_test, y_pred)
         accuracies.append(acc)
 
-        # Optionally print classification report for each fold
-        print(classification_report(y_test, y_pred))
+    # Retrain the model on the full dataset after cross-validation
+    if model_name in ["logistic", "svm"]:
+        scaler = StandardScaler()
+        imputer = SimpleImputer(strategy='median')
+        X = imputer.fit_transform(X)
+        X_scaled = scaler.fit_transform(X)
+    else:
+        imputer = SimpleImputer(strategy='median')
+        X_scaled = imputer.fit_transform(X)
 
-        # Feature importance for tree-based models
-        if model_select in ["random_forest", "xgboost"]:
-            importances = model.feature_importances_
-            feature_importances = sorted(zip(X.columns, importances), key=lambda x: -x[1])
-            print("\nFeature Importances:")
-            for feature, importance in feature_importances:
-                print(f"{feature}: {importance:.4f}")
+    model.fit(X_scaled, y)
 
-    # Report overall results
-    print(f"Mean Accuracy: {np.mean(accuracies):.2f}")
-    print(f"Standard Deviation: {np.std(accuracies):.2f}")
+    # Compute mean and std deviation
+    mean_accuracy = np.mean(accuracies)
+    std_accuracy = np.std(accuracies)
 
-    return np.mean(accuracies), np.std(accuracies)
-
+    return model, mean_accuracy, std_accuracy
 
 
 
@@ -176,6 +106,7 @@ def group_kfold_validation_all_models(df, n_splits=5, random_state=42):
     Args:
         df: DataFrame containing the dataset.
         n_splits: Number of folds for cross-validation.
+        random_state
 
     Returns:
         A dictionary with model names, mean accuracy, and standard deviation.
@@ -248,11 +179,6 @@ def group_kfold_validation_all_models(df, n_splits=5, random_state=42):
             acc = accuracy_score(y_test, y_pred)
             accuracies.append(acc)
 
-            #feature importance - to remove
-            if model_name in ["random_forest", "decision_tree"]:
-                print(X.columns)
-                print(model_name, model.feature_importances_)
-
         # Store the results
         results.append({
             "model": model_name,
@@ -263,4 +189,68 @@ def group_kfold_validation_all_models(df, n_splits=5, random_state=42):
 
     return results
 
+def plot_all_df(all_results):
+  # Set up the plot
+  plt.figure(figsize=(16, 8))
 
+  # Barplot for mean accuracy
+  sns.barplot(
+      data=all_results,
+      x="model",
+      y="mean_accuracy",
+      hue="task",
+      ci=None  # Disable seaborn's internal confidence intervals
+  )
+
+  # Add error bars for individual bars
+  for i, bar in enumerate(plt.gca().patches):
+      # Retrieve mean_accuracy and std_deviation from DataFrame
+      model = all_results.iloc[i % len(all_results)]  # Handles bar group looping
+      mean = model["mean_accuracy"]
+      std = model["std_deviation"]
+      
+      # Add error bar centered at the top of the bar
+      plt.errorbar(
+          x=bar.get_x() + bar.get_width() / 2,  # Center of the bar
+          y=mean,  # Mean value
+          yerr=std,  # Standard deviation as error
+          fmt='none',  # No marker
+          c='black',
+          capsize=5  # Small caps on error bars
+      )
+  # Formatting the plot
+  plt.title("Model Performance Across Tasks", fontsize=16)
+  plt.ylabel("Mean Accuracy", fontsize=14)
+  plt.xlabel("Model", fontsize=14)
+  plt.xticks(rotation=45)
+  plt.legend(title="Task")
+  plt.tight_layout()
+
+  # Show plot
+  plt.show()
+
+
+def plot_best_five_individual(plots_df):
+  plt.rcParams.update({'errorbar.capsize': 20})
+  count = 0
+  for df in plots_df:
+      # print(df)
+  # Create the bar plot
+      plt.figure(figsize=(10, 6))
+      sns.barplot(x='model', y='mean_accuracy', data=df, yerr=df['std_deviation'], ecolor='black')
+      if count == 0:
+      # Add labels and title
+          plt.title('Binary Classification (CompanyDrug) Results: Model Accuracy')
+      elif count == 1:
+          plt.title('Binary Classification (Terbinafin) Results: Model Accuracy')
+      else:
+          plt.title('Multi-class Classification Results: Model Accuracy')
+      plt.xlabel('Model')
+      plt.ylabel('Mean Accuracy')
+
+      # Show the plot
+      plt.xticks(rotation=45)
+      plt.tight_layout()
+      plt.show()
+      
+      count += 1
