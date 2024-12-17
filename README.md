@@ -52,14 +52,42 @@ xgboost | 1.6.2 |
 
 ## Running the Project
 
-To execute the best-performing models for all three sections (drug classification, lifespan estimation, and optogenetic behavior analysis), run the run.py script:
+To execute the best-performing models for all three sections (drug classification, lifespan estimation, and optogenetic behavior analysis), run the `run.py` script with the appropriate flag to specify the type of classification:
 
+### Command Structure
 ```bash
-python run.py
+python run.py --type <flag>
 ```
-Output:
-The mean accuracies and standard deviations for the best models in each section will be printed.
-The trained models will be saved in the models/ directory.
+
+### Flags
+- `classification-companydrug`: Runs the model for binary classification of the company drug dataset.
+- `classification-terbinafin`: Runs the model for binary classification of the terbinafin drug dataset.
+- `classification-multiclass`: Runs the model for multiclass classification using the combined dataset.
+
+### Example Usage
+To run the model for company drug classification:
+```bash
+python run.py --type classification-companydrug
+```
+
+To run the model for terbinafin drug classification:
+```bash
+python run.py --type classification-terbinafin
+```
+
+To run the model for multiclass classification:
+```bash
+python run.py --type classification-multiclass
+```
+
+### Output
+- The mean accuracy and standard deviation for the selected model will be printed.
+- If a pre-trained model exists in the `models/` directory, it will be loaded. If not, a new model will be trained and saved in the `models/` directory.
+
+The respective datasets are loaded from the `lifespan_merged_datasets/` folder, and the model files are stored in the `models/` folder as:
+- `best_model_companyDrug.pkl`
+- `best_model_terbinafin.pkl`
+- `best_model_multiclass.pkl`.
 
 ## File Structure 
 
