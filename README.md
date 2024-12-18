@@ -89,7 +89,10 @@ python run.py --type lifespan-all
 The respective datasets are loaded from the `lifespan_merged_datasets/` folder, and the model files are stored in the `models/` folder as:
 - `best_model_Drug1.pkl`
 - `best_model_Drug2.pkl`
-- `best_model_multiclass.pkl`.
+- `best_model_multiclass.pkl`
+- `lifespan_prediction_all.pkl`
+- `lifespan_prediction_Drug1.pkl`
+- `lifespan_prediction_Drug2.pkl`.
 
 ## File Structure 
 
