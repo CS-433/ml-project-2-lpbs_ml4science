@@ -106,8 +106,8 @@ ml-project-2-lpbs-ml4science/
 ├── lifespan_exploration/               # Lifespan-related exploration
 │   ├── classification_functions.py     # Classification functions for training model and plotting
 │   ├── drugs_classification.ipynb      # Notebook explaining classification
-│   └── ...                             # Lifespan estimation functions for training model
-│   └── ...                             # Notebook explaining lifespan estimation
+│   └── lifespan_estimation_function.py # Lifespan estimation functions for training model
+│   └── lifespan_estimation.ipynb       # Notebook explaining lifespan estimation
 │
 ├── preprocessing/                      # Preprocessing
 │   ├── Analysis_single_worm.ipynb      # Lifespan dataset - Initial analysis for feature engineering         
@@ -118,7 +118,9 @@ ml-project-2-lpbs-ml4science/
 │   ├── best_model_Drug1.pkl            # Drug1 binary classification  
 │   ├── best_model_Drug2.pkl            # Drug2 binary classification
 │   ├── best_model_multiclass.pkl       # Multi-class classification
-│   ├── best_model_lifespan.pkl         # Lifespan prediction
+│   ├── lifespan_prediction_Drug1.pkl   # Lifespan prediction for Drug1
+│   ├── lifespan_prediction_Drug2.pkl   # Lifespan prediction for Drug2
+│   ├── lifespan_prediction_all.pkl     # Lifespan prediction for all worms
 │   └── best_model_opto.pkl             
 │
 ├── requirements.txt                    # Required libraries
