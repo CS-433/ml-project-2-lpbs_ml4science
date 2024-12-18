@@ -90,13 +90,15 @@ python run.py --type lifespan-all
 - The mean accuracy and standard deviation for the selected model will be printed.
 - If a pre-trained model exists in the `models/` directory, it will be loaded. If not, a new model will be trained and saved in the `models/` directory.
 
-The respective datasets are loaded from the `lifespan_merged_datasets/` folder, and the model files are stored in the `models/` folder as:
+The respective datasets are loaded from the `lifespan_merged_datasets/` folder, and the model files are stored in the `models/` folder. There are several pre-trained models available. They are listed below:
 - `best_model_Drug1.pkl`
 - `best_model_Drug2.pkl`
 - `best_model_multiclass.pkl`
 - `lifespan_prediction_all.pkl`
 - `lifespan_prediction_Drug1.pkl`
 - `lifespan_prediction_Drug2.pkl`.
+
+If you would like to train your own model, please refer to `drugs_classification.ipynb` and `lifespan_estimation.ipynb`, for classification and lifespan estimation respectively.
 
 ## File Structure 
 
