@@ -63,21 +63,23 @@ python run.py --type <flag>
 - `classification-drug1`: Runs the model for binary classification of the Drug1 dataset.
 - `classification-drug2`: Runs the model for binary classification of the Drug2 dataset.
 - `classification-multiclass`: Runs the model for multiclass classification using the combined dataset.
+- `lifespan-drug1`: Runs the model for lifespan prediction of the Drug1 dataset
+- `lifespan-drug2`: Runs the model for lifespan prediction of the Drug2 dataset
+- `lifespan-all`: Runs the model for lifespan prediction of the entire dataset (all worms)
+
 
 ### Example Usage
 To run the model for Drug1 classification:
 ```bash
 python run.py --type classification-drug1
 ```
-
-To run the model for Drug2 classification:
-```bash
-python run.py --type classification-drug2
-```
-
 To run the model for multiclass classification:
 ```bash
 python run.py --type classification-multiclass
+```
+To run the model for lifespan prediction for all worms:
+```bash
+python run.py --type lifespan-all
 ```
 
 ### Output
