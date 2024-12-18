@@ -16,7 +16,8 @@ For drug classification, a **linear SVM** model performed best considering all 3
   - **Drug1**: **0.741053**
   - **Drug2**: **0.419421**
 
-Models for lifespan estimation demonstrated that **[insert results here]**.
+Models for lifespan estimation were not promising, with linear regressions and elastic net regularization showing MSEs of 7.65 and 7.07 respectively.
+
 
 Finally, models analyzing optogenetic behavior revealed that **[insert results here]**.
 
