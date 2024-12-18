@@ -36,17 +36,21 @@ To install the libraries required for this project, run the following command:
 pip install -r requirements.txt
 ```
 
-This should install the following libaries
+The following libraries were used in this project, along with their specific purposes:
 
-Library | Version | 
---- | --- | 
-numpy | 1.21.6 |
-pandas | 1.0.0 |
-matplotlib | 3.3.1 |
-joblib | 1.3.2 |
-seaborn | 0.10.0 |
-scikit-learn | 1.0.2 |
-xgboost | 1.6.2 |
+| Library        | Version | Purpose                                                                                  |
+|----------------|---------|------------------------------------------------------------------------------------------|
+| `numpy`        | 1.21.6  | Used for numerical computations, including array manipulations and statistical measures. |
+| `pandas`       | 1.0.0   | Used for handling and processing data in the form of DataFrames.                        |
+| `matplotlib`   | 3.3.1   | Used for creating visualizations and plots.                                             |
+| `seaborn`      | 0.10.0  | Used for enhanced data visualization, such as heatmaps and pair plots.                  |
+| `joblib`       | 1.3.2   | Used for saving and loading trained models.                                             |
+| `scikit-learn` | 1.0.2   | Used extensively for machine learning, data preprocessing, and evaluation. Key imports include: |
+|                |         | - **Metrics**: `accuracy_score`, `precision_score`, `recall_score`, `f1_score`, `confusion_matrix`, `mean_squared_error`, `r2_score` for evaluating model performance. |
+|                |         | - **Preprocessing**: `SimpleImputer`, `StandardScaler` for handling missing values and scaling data. |
+|                |         | - **Models**: `LinearRegression`, `LogisticRegression`, `RandomForestRegressor`, `ElasticNet`, `SVC`, `KNeighborsClassifier`, `GaussianNB`, `MLPClassifier`, `DecisionTreeClassifier`, and `RandomForestClassifier` for building and testing models. |
+|                |         | - **Model Selection**: `GroupKFold` for cross-validation, `StackingClassifier` for combining multiple models. |
+| `xgboost`      | 1.6.2   | Used for implementing `XGBRegressor` and `XGBClassifier`, which provide powerful gradient boosting models for regression and classification tasks. |
 
 ---
 
