@@ -193,7 +193,6 @@ def test_optogenetics_model():
     print(f"Test Loss: {test_loss}, Test Accuracy: {test_accuracy}")
     
 
-
 if __name__ == "__main__":
     print("Testing Best Models...")
     test_classification_model()
