@@ -8,7 +8,7 @@ This project examines the lifespan and behavior of *C. elegans* under two drug t
 
 1. Classify worms based on drug treatments (**Drug1** and **Drug2**).
 2. Predict lifespan-related outcomes.
-3. Analyze behavioral responses to light stimuli under optogenetic conditions (**ATR+** and **ATR-**).
+3. Identify and classify the different worms based on their response to the light stimulus?
 
 For drug classification, a **linear SVM** model performed best considering all 3 classifications, achieving:
 - Multi-class classification mean accuracy: **0.544557**
