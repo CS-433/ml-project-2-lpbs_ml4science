@@ -19,7 +19,7 @@ For drug classification, a **linear SVM** model performed best considering all 3
 Models for lifespan estimation were not promising, with linear regressions and elastic net regularization showing very high MSEs of 2.62, 7.65, and 7.07 for Drug1, Drug2 and the combined dataset respectively.
 
 
-Finally, models analyzing optogenetic behavior revealed that an LSTM model gives the best results with an accuracy of 0.9317 and the loss being 0.3659 for the correct identification of worms.
+Finally, models analyzing optogenetic behavior revealed that an LSTM model gives the best results with an accuracy of 0.9383 and the loss being 0.3351 for the correct identification of worms.
 
 ---
 
