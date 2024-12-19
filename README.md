@@ -19,7 +19,7 @@ For drug classification, a **linear SVM** model performed best considering all 3
 Models for lifespan estimation were not promising, with linear regressions and elastic net regularization showing very high MSEs of 2.62, 7.65, and 7.07 for Drug1, Drug2 and the combined dataset respectively.
 
 
-Finally, models analyzing optogenetic behavior revealed that **[insert results here]**.
+Finally, models analyzing optogenetic behavior revealed that an LSTM model gives the best results with an accuracy of 0.9317 and the loss being 0.3659 for the correct identification of worms.
 
 ---
 
@@ -94,7 +94,7 @@ The respective datasets are loaded from the `lifespan_merged_datasets/` folder, 
 - `lifespan_prediction_Drug1.pkl`   
 - `lifespan_prediction_Drug2.pkl`   
 - `cnn_model.keras`                 
-- `lstm_model.keras`                  
+- `LSTM_model.keras`                  
 
 If you would like to train your own model, please refer to `lifespan_exploration/drugs_classification.ipynb` for classification and `lifespan_exploration/lifespan_estimation.ipynb` for lifespan estimation. 
 
@@ -149,7 +149,7 @@ ml-project-2-lpbs-ml4science/
 │   ├── lifespan_prediction_Drug1.pkl   # Lifespan prediction for Drug1
 │   ├── lifespan_prediction_Drug2.pkl   # Lifespan prediction for Drug2
 │   ├── lifespan_prediction_all.pkl     # Lifespan prediction for all worms
-│   ├── lstm_model.keras                # Optogenetics LSTM pre-trained model
+│   ├── LSTM_model.keras                # Optogenetics LSTM pre-trained model
 │   └── cnn_model.keras                 # Optogenetics CNN pre-trained model
 │
 ├── requirements.txt                    # Required libraries
