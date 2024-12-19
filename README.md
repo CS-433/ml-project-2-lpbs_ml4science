@@ -103,7 +103,7 @@ If you would like to train your own model, please refer to `drugs_classification
 
 ### Producing the Optogenetics dataset with all the features
 
-To produce the koint dataset for training from the raw csv data files, you need to navigate to the `optogen_data` folder and run the following command (insert the path to the csv files as an input): 
+To produce the joint dataset for training from the raw csv data files, you may navigate to the `optogen_data` folder and run the following command (insert the path to the csv files as an input): 
 ```bash
 python combineATR.py
 ```
