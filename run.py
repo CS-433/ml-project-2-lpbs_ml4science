@@ -147,7 +147,7 @@ def create_sequences(data, time_steps):
 def test_optogenetics_model():
     """Test the best optogenetics model using GroupKFold."""
     print("\n\nOptogenetics Model")
-    model_path = "models/LSTM_model1.keras"  # Update path as needed
+    model_path = "models/LSTM_model.keras"  # Update path as needed
     if not os.path.exists(model_path):
         raise FileNotFoundError(f"Optogenetics model not found at {model_path}")
     
