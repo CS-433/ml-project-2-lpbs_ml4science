@@ -12,7 +12,7 @@ from keras.models import load_model
 from tensorflow.keras.utils import to_categorical
 
 
-time_steps = 20  # Use 20 past timesteps for prediction
+time_steps = 10  # Use 20 past timesteps for prediction
 
 def load_classification_data():
     """Load dataset and prepare data for classification."""
