@@ -1,6 +1,6 @@
 import pandas as pd
 from glob import glob
-import preprocessing.exploration_ATR as exploration_ATR
+import exploration_ATR as exploration_ATR
 
 # Define the folder containing all worm CSV files
 #folder_path = "Optogenetics-20241202T112946Z-001/Optogenetics/ATR+"  # Update with the path to your csv files
