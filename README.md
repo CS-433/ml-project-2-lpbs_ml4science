@@ -11,10 +11,10 @@ This project examines the lifespan and behavior of *C. elegans* under two drug t
 3. Identify and classify the different worms based on their response to the light stimulus?
 
 For drug classification, a **linear SVM** model performed best considering all 3 classifications, achieving:
-- Multi-class classification mean accuracy: **0.544557**
 - Binary classification mean accuracies:
   - **Drug1**: **0.741053**
   - **Drug2**: **0.419421**
+- Multi-class classification mean accuracy: **0.544557**
 
 Models for lifespan estimation were not promising, with linear regressions and elastic net regularization showing very high MSEs of 2.62, 7.65, and 7.07 for Drug1, Drug2 and the combined dataset respectively.
 
@@ -87,14 +87,14 @@ The `run.py` script will display the following metrics for the best models of ea
 
 ### Models and Datasets
 The respective datasets are loaded from the `lifespan_merged_datasets/` folder, and the model files are stored in the `models/` folder. There are several pre-trained models available. They are listed below:
-- `best_model_Drug1.pkl`            # Classification
-- `best_model_Drug2.pkl`            # Classification
-- `best_model_multiclass.pkl`       # Classification
-- `lifespan_prediction_all.pkl`     # Lifespan Estimation
-- `lifespan_prediction_Drug1.pkl`   # Lifespan Estimation
-- `lifespan_prediction_Drug2.pkl`   # Lifespan Estimation
-- `cnn_model.keras`                 # Optogenetics
-- `lstm_model.keras`                # Optogenetics  
+- `best_model_Drug1.pkl`            
+- `best_model_Drug2.pkl`            
+- `best_model_multiclass.pkl`       
+- `lifespan_prediction_all.pkl`     
+- `lifespan_prediction_Drug1.pkl`   
+- `lifespan_prediction_Drug2.pkl`   
+- `cnn_model.keras`                 
+- `lstm_model.keras`                  
 
 If you would like to train your own model, please refer to `lifespan_exploration/drugs_classification.ipynb` for classification and `lifespan_exploration/lifespan_estimation.ipynb` for lifespan estimation. 
 
@@ -106,7 +106,7 @@ python combineATR.py
 ```
 After you have successfully inserted the path to your raw dataset, the script automatically produces the merged dataset with all the relevant features for you which can later be split into training and testing datasets.  
 
-For more information about the models we have used for training as well as various analyses and experiments we carried out to study the dataset, please refer to `explorationATR2.ipynb` and `explorationATR.ipynb` in the `optogen_exploration` folder. 
+For more information about the models we have used for training as well as various analyses and experiments we carried out to study the dataset, please refer to `exploration_ATR.ipynb` and `exploration_ATR2.ipynb` in the `optogen_exploration` folder. 
 
 ## File Structure 
 
