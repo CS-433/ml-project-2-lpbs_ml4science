@@ -109,6 +109,8 @@ python combineATR.py
 ```
 After you have successfully inserted the path to your raw dataset, the script automatically produces the merged dataset with all the relevant features for you which can later be split into training and testing datasets.  
 
+For more information about the models we have used for training as well as various analyses and experiments we carried out to study the dataset, please refer to `explorationATR2.ipynb` and `explorationATR.ipynb` in the `optogen_exploration` folder. 
+
 ## File Structure 
 
 ```graphql
