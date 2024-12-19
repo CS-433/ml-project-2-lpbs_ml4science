@@ -101,6 +101,14 @@ The respective datasets are loaded from the `lifespan_merged_datasets/` folder, 
 
 If you would like to train your own model, please refer to `drugs_classification.ipynb` and `lifespan_estimation.ipynb`, for classification and lifespan estimation respectively.
 
+### Producing the Optogenetics dataset with all the features
+
+To produce the koint dataset for training from the raw csv data files, you need to navigate to the `optogen_data` folder and run the following command (insert the path to the csv files as an input): 
+```bash
+python combineATR.py
+```
+After you have successfully inserted the path to your raw dataset, the script automatically produces the merged dataset with all the relevant features for you which can later be split into training and testing datasets.  
+
 ## File Structure 
 
 ```graphql
